@@ -1,0 +1,62 @@
+A Performance Analysis Engineer for GPU Profiling and Optimization is a specialized role focused on identifying bottlenecks and enhancing the efficiency of software running on Graphics Processing Units. These engineers bridge the gap between high-level application code and low-level hardware architecture to maximize "Performance per Watt". 
+Kempner Computing Handbook
+
+Core Responsibilities
+GPU Profiling: Using tools like NVIDIA Nsight Systems (system-wide analysis) and Nsight Compute (kernel-specific details) to trace execution and identify hotspots.
+Bottleneck Identification: Pinpointing whether an application is limited by compute (math operations), memory bandwidth, or communication overhead (e.g., PCIe or NVLink transfers).
+Optimization: Implementing techniques such as kernel fusion, memory pinning, and reducing precision (e.g., from FP32 to FP16) to speed up execution.
+Tool Development: Designing and prototyping new data collection methods and profiling libraries to support next-generation GPU architectures. 
+
+Key Skills & Requirements
+Programming: Mastery of C/C++ and scripting languages like Python for automation.
+GPU APIs: Deep knowledge of parallel computing frameworks such as NVIDIA CUDA, OpenCL, or Vulkan.
+Architecture Knowledge: Understanding of SM (Streaming Multiprocessor) utilization, memory hierarchies (L1/L2 caches, HBM), and hardware performance counters.
+Experience: Typically requires a BS/MS/PhD in Computer Engineering or CS, with 2+ years of experience in system software or device drivers. 
+
+Industry Context
+Major tech companies like NVIDIA, AMD, Qualcomm, and Apple hire for these roles to optimize workloads ranging from AI/LLM training to mobile gaming and autonomous driving. 
+
+Are you looking for specific interview preparation for this role, or are you interested in how to use a particular profiling tool like Nsight?
+
+
+
+
+
+17.3. GPU Profiling — Kempner Institute Computing Handbook
+* 17.3. GPU Profiling. This section explains how to profile GPUs to design a better performant code. GPU profiling helps to get so...
+
+Kempner Computing Handbook
+
+Senior System Software Engineer, GPU Performance Profiling
+18 Feb 2026 — The successful Profiling Tools Engineer will work with the NVIDIA Compute Tools team to build tools to enable developers worldwide...
+
+nvidia.wd5.myworkdayjobs.com
+Profiling and optimization of multi-card GPU machine learning jobs
+28 May 2025 — 3.2 Benchmarking software and procedures * 3.2. 1 Implementation frameworks. Report issue for preceding element. To perform the im...
+
+arXiv
+Show all
+SKILLS & tools required
+To excel as a Performance Analysis Engineer for GPU Profiling and Optimization, you need a combination of low-level hardware knowledge and proficiency with vendor-specific toolchains.
+1. Essential Profiling & Debugging Tools
+Mastering these tools is critical for identifying bottlenecks across different hardware vendors:
+NVIDIA Stack: Use Nsight Systems for system-wide timeline tracing and Nsight Compute for deep-dive kernel-level metrics. For correctness and memory leak detection, use Compute Sanitizer.
+AMD Stack: Utilize the Radeon Developer Tool Suite, specifically the Radeon GPU Profiler (RGP) for instruction-level traces and AMD uProf for system-wide performance and power analysis.
+Cross-Platform & Open Source: HPCToolkit and TAU (Tuning and Analysis Utility) are vital for vendor-neutral profiling across NVIDIA, AMD, and Intel GPUs.
+Graphics-Specific: For gaming or rendering workloads, tools like RenderDoc and Nsight Graphics allow for frame-by-frame capture and shader debugging. 
+
+2. Core Technical Skills
+GPU Architectures: Deep understanding of Streaming Multiprocessors (SMs), warp/wavefront scheduling, memory hierarchies (L1/L2, HBM, DDR), and interconnects like NVLink.
+Parallel Programming: Proficiency in NVIDIA CUDA, ROCm/HIP, or graphics APIs like Vulkan and DirectX 12.
+Software Development: Strong C/C++ for writing performance-critical code and Python for automating data collection and analysis scripts.
+Data Analysis: Ability to interpret complex telemetry data, including hardware performance counters (e.g., occupancy, stall reasons, memory throughput) to propose novel optimization strategies. 
+
+3. Specialized Libraries & Frameworks
+Communication: Knowledge of distributed training libraries like NCCL (NVIDIA) or RCCL (AMD) for multi-GPU scaling.
+AI/ML Frameworks: Familiarity with PyTorch and TensorFlow profiling extensions (e.g., PyTorch Kineto) to optimize large-scale AI training workloads. 
+
+Would you like a step-by-step roadmap to transition into this role, or are you interested in specific optimization techniques for a particular workload like AI training?
+
+
+**********************************************
+
