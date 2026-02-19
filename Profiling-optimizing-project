@@ -1,0 +1,73 @@
+Performance-Analysis-Engineer-GPU-Profiling-and-optimizing-
+*************************************
+To practice GPU profiling, the best "Hello World" project is Parallel Vector Addition. This project demonstrates the transition from serial CPU code to parallel GPU code and introduces the most common performance bottleneck: Data Transfer Overhead.
+The Project: Vector Addition (A + B = C) 
+This project involves adding two large arrays (vectors) of 10 million elements each. You will implement the GPU version and use profiling to see if the actual computation or the memory movement is the bottleneck.
+1. The CUDA Code (vector_add.cu) 
+cpp
+#include <iostream>
+#include <cuda_runtime.h>
+
+// GPU Kernel: Each thread adds one pair of elements
+__global__ void vectorAdd(const float* A, const float* B, float* C, int N) {
+    int i = blockDim.x * blockIdx.x + threadIdx.x; //
+    if (i < N) {
+        C[i] = A[i] + B[i];
+    }
+}
+
+int main() {
+    int N = 1 << 24; // ~16 million elements
+    size_t size = N * sizeof(float);
+
+    // 1. Allocate Host (CPU) Memory
+    float *h_A = new float[N], *h_B = new float[N], *h_C = new float[N];
+    for (int i = 0; i < N; i++) { h_A[i] = 1.0f; h_B[i] = 2.0f; }
+
+    // 2. Allocate Device (GPU) Memory
+    float *d_A, *d_B, *d_C;
+    cudaMalloc(&d_A, size);
+    cudaMalloc(&d_B, size);
+    cudaMalloc(&d_C, size);
+
+    // 3. Copy Data from Host to Device
+    cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
+    cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
+
+    // 4. Launch Kernel (256 threads per block)
+    int threadsPerBlock = 256;
+    int blocksPerGrid = (N + threadsPerBlock - 1) / threadsPerBlock;
+    vectorAdd<<<blocksPerGrid, threadsPerBlock>>>(d_A, d_B, d_C, N);
+
+    // 5. Copy Result back to Host
+    cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
+
+    // Cleanup
+    cudaFree(d_A); cudaFree(d_B); cudaFree(d_C);
+    delete[] h_A; delete[] h_B; delete[] h_C;
+    return 0;
+}
+
+
+2. Profiling Exercise
+Once you compile the code with nvcc vector_add.cu -o vector_add, run the following commands to analyze it:
+Step A: Timeline Analysis
+Run NVIDIA Nsight Systems to see a visual timeline:
+bash
+nsys profile --trace=cuda,osrt ./vector_add
+
+
+What to look for: You will likely see that cudaMemcpy (moving data) takes significantly more time than the vectorAdd kernel itself. This confirms the application is Memory-Bound.
+Step B: Kernel-Level Metrics
+Run NVIDIA Nsight Compute for deep-dive stats on the kernel:
+bash
+ncu ./vector_add
+
+
+What to look for: Check SM Occupancy (how many GPU "seats" are filled) and Memory Throughput. In a simple vector add, throughput should be high, but if the index logic was inefficient, you'd see "Uncoalesced Accesses" warnings. 
+
+3. Suggested Optimizations to Test
+Unified Memory: Replace cudaMalloc with cudaMallocManaged to let the driver handle transfers. Profile again to see how "Page Faults" affect speed.
+Streams: Use CUDA Streams to overlap the data transfer of the first half of the array with the computation of the second half. 
+
+*****************************************
